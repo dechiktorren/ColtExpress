@@ -1,6 +1,6 @@
 package vue;
 
-import modele.Train;
+import modele.Modele;
 
 import java.util.*;
 import java.awt.*;
@@ -9,12 +9,12 @@ import javax.swing.*;
 
 public class VueTrain extends JPanel implements Observer {
     /** On maintient une référence vers le modèle. */
-    private Train train;
+    private Modele modele;
     /** Définition d'une taille (en pixels) pour l'affichage des cellules. */
     private final static int TAILLE = 12;
 
     /** Constructeur. */
-    public VueGrille(CModele modele) {
+    public VueTrain(Modele modele) {
 	this.modele = modele;
 	/** On enregistre la vue [this] en tant qu'observateur de [modele]. */
 	modele.addObserver(this);
@@ -23,8 +23,8 @@ public class VueTrain extends JPanel implements Observer {
 	 * l'interface, calculée en fonction du nombre de cellules et de la
 	 * taille d'affichage.
 	 */
-	Dimension dim = new Dimension(TAILLE*CModele.LARGEUR,
-				      TAILLE*CModele.HAUTEUR);
+	Dimension dim = new Dimension(TAILLE*Modele.LARGEUR,
+				      TAILLE*Modele.HAUTEUR);
 	this.setPreferredSize(dim);
     }
 
@@ -47,8 +47,8 @@ public class VueTrain extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
 		super.repaint();
 		/** Pour chaque cellule... */
-		for(int i=1; i<=CModele.LARGEUR; i++) {
-		    for(int j=1; j<=CModele.HAUTEUR; j++) {
+		for(int i=1; i<=Modele.LARGEUR; i++) {
+		    for(int j=1; j<=Modele.HAUTEUR; j++) {
 			/**
 			 * ... Appeler une fonction d'affichage auxiliaire.
 			 * On lui fournit les informations de dessin [g] et les

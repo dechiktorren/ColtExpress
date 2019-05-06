@@ -1,6 +1,6 @@
 package vue;
 
-import modele.Train;
+import modele.Modele;
 
 import java.util.*;
 import java.awt.*;
@@ -22,7 +22,7 @@ public class CEVue {
     private VueCommandes vueCommandes;
 
     /** Construction d'une vue attachée à un modèle. */
-    public CEVue(Train train) {
+    public CEVue(Modele modele) {
 	/** Définition de la fenêtre principale. */
 	frame = new JFrame();
 	frame.setTitle("Colt Express");
@@ -44,9 +44,9 @@ public class CEVue {
 	frame.setLayout(new FlowLayout());
 
 	/** Définition des deux vues et ajout à la fenêtre. */
-	vueTrain = new VueTrain(train);
+	vueTrain = new VueTrain(modele);
 	frame.add(vueTrain);
-	vueCommandes = new VueCommandes(train);
+	vueCommandes = new VueCommandes(modele);
 	frame.add(vueCommandes);
 	/**
 	 * Remarque : on peut passer à la méthode [add] des paramètres
