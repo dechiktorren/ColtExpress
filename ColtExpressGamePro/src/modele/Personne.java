@@ -5,9 +5,9 @@ import java.util.Set;
 
 
 public abstract class Personne {
-	protected String name; // nom de bandit
-	protected Train.Wagon wagon; //Le wagon ou il existe
-	protected ActionList actions; //L'esemble des actions qui va prendre chaque tour max = 5
+	protected String name; // nom du bandit
+	protected Train.Wagon wagon; // Le wagon dans lequel il se situe
+	protected ActionList actions; // L'enemble des actions qui va prendre chaque tour max = 5
 	
 	
 	public Personne(Train t, String name){
@@ -17,13 +17,16 @@ public abstract class Personne {
 	}
 	
 	
-	//this method will be used in contructor and we will redefine it in each sub-class 
-	//according to polymorphisme, the method applied in the contructor are the good one
+	//this method will be used by the contructor and we will be redefined in each sub-class 
+	//according to polymorphisme, the method applied in the contructor is the good one
 	abstract Train.Wagon personneWagon(Train t, Personne p); // return the wagon where p should be 
+	
 	abstract void executeAction(); 	//execute le premiere action s'il en a	
+	
 	public void addAction(Action a) {
 		actions.addAction(a);
 	}
+	
 	public void tirer() {
 		Bandit b2 = wagon.anotherBanditThan(this);
 		if(b2 == null) {

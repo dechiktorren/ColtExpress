@@ -41,8 +41,10 @@ public class Train
 	/*
 	 * Constructeur 
 	 * @param n : int 
-	 * le nombre de wagon dans ce train il y aura au moins un locomotive et un wagon
+	 * le nombre de wagon dans ce train.
+	 * il y aura au moins un locomotive et un wagon
 	 */
+	
 	public Train(int n){
 		if(n <1) n =1;
 		this.NB_WAGONS = n;

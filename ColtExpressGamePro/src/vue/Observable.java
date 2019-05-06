@@ -1,7 +1,6 @@
-package modele;
+package vue;
 
 import java.util.ArrayList;
-import vue.Observer;
 
 public abstract class Observable {
     /**

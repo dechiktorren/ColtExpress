@@ -1,6 +1,6 @@
 package vue;
 
-public class Controleur {
+public class Controleur extends Observable{
 	
 	
 	

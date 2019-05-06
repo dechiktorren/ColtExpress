@@ -5,17 +5,11 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class AffichageDeplacement implements Observer {
+public class VueCommandes {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public void update() {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
