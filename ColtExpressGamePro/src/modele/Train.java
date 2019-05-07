@@ -19,7 +19,7 @@ import java.util.Set;
 
 
 
- le train c'est une liste doublement chaine 
+ le train est une liste doublement chaine 
  Le modelisation a ete choisi comme ca car c'est plus proche de modele reel + conseil de prof
  Un train : un esemble de wagons connectes l'un et l'autre
  */
@@ -79,13 +79,8 @@ public class Train extends Observable
 		return out;
 	}
 	
-	/*
-	 * Cette fonction permet a un Marshall de monter sur le locomotive de train
-	 */
-	public Wagon marshaLocomotive(Marshall b) {
-		this.getLocomotive().marshall = true;
-		return this.getLocomotive();
-	}
+	
+
 	public String toString() {
 		String out ="";
 		out += this.getLocomotive();
@@ -159,19 +154,21 @@ public class Train extends Observable
 
 
 
-	public class Wagon
+	public class Wagon extends Possesseur
 	{
 		private Train train;
 		private Wagon suivant;
 		private Wagon precedent;
 		private Set<Bandit> bandits;
-		private boolean marshall;
-		private Butins butins;
+		private Marshall marshall; // vaut null si le marshall n'est pas dans le wagon
 		private int ordre; // pour les test unitaire
+		
 		public Wagon(Train t, int o){
+			super(10);
 			train =t;
 			setBandits(new HashSet<Bandit>(0));
 			ordre = o;
+			marshall = null;
 		}
 		public boolean isLastWagon() {
 			return  this.getSuivant()==(null);
@@ -182,57 +179,51 @@ public class Train extends Observable
 		public boolean isLoco() {
 			return this==(train.getLocomotive());
 		}
+		
+		// pourquoi retourner un wagon
 		public Wagon avanceMarshall() {
-			if(!this.marshall) return null;
-			this.marshall = false;
-			this.getSuivant().marshall = true;	
-			return this.getSuivant();
+			if(!this.isMarshall()) return null; 
+			this.suivant.marshall = this.marshall;
+			this.marshall = null;
+			return this.suivant;
 		}
+		
 		public Wagon reculeMarshall() {
-			if(!this.marshall) return null;//si le marshall n'est pas ici 
-			this.marshall = false;
-			this.precedent.marshall = true;	
+			if(!this.isMarshall()) return null;//si le marshall n'est pas ici 
+			this.precedent.marshall = this.marshall;
+			this.marshall = null;
 			return this.precedent;
 		}
 		public Wagon avanceBandit(Bandit bandit) {
-			getBandits().remove(bandit);
-			this.getSuivant().getBandits().add(bandit);	
-			return this.getSuivant();
+			this.bandits.remove(bandit);
+			this.suivant.bandits.add(bandit);	
+			return this.suivant;
 		}
 		public Wagon reculeBandit(Bandit bandit) {
-			getBandits().remove(bandit);
-			this.precedent.getBandits().add(bandit);
+			this.bandits.remove(bandit);
+			this.precedent.bandits.add(bandit);
 			return this.precedent;
 		}
 		
 		public String toString() {
-			String marsh = (this.marshall)?" ":" not ";
+			String marsh = (this.isMarshall())?" ":" not ";
 			String out = "Wagon contains"+marsh+"marshall"+ordre+":\n"+
 					"		Bandits" + getBandits() + "\n";
 			return out;
 			
 		}
 		
-		public void addButin(Butin b) {
-			butins.pushButin(b);
-		}
-		public Butin stoleButin() {
-			return butins.popButin();
-		}
 		public Bandit anotherBanditThan(Personne p) {
 			/*if(bandits.size()<=1) {
 				System.err.println("Wagon : nobody here");
 				return null;
 			}*/
-			for(Bandit b2 : getBandits()) {
+			for(Bandit b2 : this.bandits) {
 				if(!b2.equals(p)) return b2;
 			}
 			return null;
 		}
 		
-		public ContainerStack getButins() {
-			return butins;
-		}
 		
 		public Set<Bandit> getBandits() {
 			return bandits;
@@ -248,6 +239,12 @@ public class Train extends Observable
 			this.suivant = suivant;
 		}
 
+		// Le marshall est il dans le wagon ?
+		public boolean isMarshall() {
+			return marshall == null;
+		}
+		
+		
 		/* 
 		 * Just to rename the abstract class and max = 8
 		 */
@@ -256,6 +253,14 @@ public class Train extends Observable
 			Butins() {
 				super(8);
 			} 
+		}
+
+
+		public void setMarshall(Marshall m) {
+			this.marshall = m;
+		}
+		public Marshall getMarshall() {
+			return this.marshall;
 		}
 
 

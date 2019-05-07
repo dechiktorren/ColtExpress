@@ -2,15 +2,21 @@ package modele;
 
 import java.util.Random;
 
-abstract class Butin {
+public abstract class Butin {
 	protected int valeur;
-	protected String nom;
+	private String nom;
 	protected ContainerStack cs;
+	public String getNom() {
+		return nom;
+	}
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 }
 
 class Bourse extends Butin {
 	public Bourse(ContainerStack pos){
-		this.nom ="Bourse";
+		this.setNom("Bourse");
 		this.cs = pos;
     	Random rnd = new Random();
     	this.valeur = rnd.nextInt(501);
@@ -19,7 +25,7 @@ class Bourse extends Butin {
 
 class Bijou extends Butin {
 	public Bijou(ContainerStack pos){
-		this.nom ="Bijou";
+		this.setNom("Bijou");
 		this.valeur = 500;
 		this.cs = pos;
 	}
@@ -27,7 +33,7 @@ class Bijou extends Butin {
 
 class Magot extends Butin {
 	public Magot(ContainerStack pos){
-		this.nom = "Magot";
+		this.setNom("Magot");
 		this.valeur = 1000;
 		this.cs = pos;
 	}

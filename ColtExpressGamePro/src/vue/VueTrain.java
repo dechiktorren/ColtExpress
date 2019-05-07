@@ -1,8 +1,9 @@
 package vue;
 
 import modele.Bandit;
-import modele.ContainerStack;
+import modele.Butin;
 import modele.Train;
+
 
 import java.util.*;
 import java.awt.*;
@@ -88,20 +89,28 @@ public class VueTrain extends JPanel implements Observer {
      */
     private void paint(Graphics g, Train.Wagon w, int x, int y) {
     	g.drawRect(x, y, 150, 100);
-    	int ytemp = 5;
+    	int ytemp;
     	
+    	ytemp = 5;
     	for (Bandit b : w.getBandits() ) {
     		g.drawString(b.getName(), x + 5, ytemp);
     		ytemp += 10;
     	}
     	
-    	ContainerStack contenu = w.getButins();
-    	butins = contenu.getButins();
+    	ytemp = 5;
+    	for (Butin b : w.getButins()) {
+    		g.drawString(b.getNom(), x + 55, ytemp);
+    		ytemp += 10;
+    	}
     	
+    	if (w.isMarshall()) {
+    		g.drawString(w.getMarshall().getName(), x + 105, 5);
+    	}
     }
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
+		
 
 	}
 

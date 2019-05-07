@@ -1,5 +1,8 @@
 package modele;
 
+import java.util.Random;
+import java.util.Set;
+
 import modele.Train.Wagon;
 
 public class Marshall extends Personne{
@@ -8,11 +11,13 @@ public class Marshall extends Personne{
 		super(t, name);
 	}
 
+	
 	@Override
-	Wagon personneWagon(Train t, Personne p) {
-		return t.marshaLocomotive(this);
-
+	Wagon positionInitiale(Train t, Personne p) {
+		this.train.getLocomotive().setMarshall(this);
+		return this.train.getLocomotive();
 	}
+	
 	
 	@Override
 	protected void executeAction() {
@@ -22,6 +27,7 @@ public class Marshall extends Personne{
 		if(actionExcute.equals(Action.Tirer)) {
 			this.tirer();
 		}
+		
 		if(!wagon.isLastWagon() && actionExcute.equals(Action.Avance)) {
 			Train.Wagon newWagon = wagon.avanceMarshall();
 			if(newWagon == null) System.err.println("OUUPS CHECK1 executeAction  Marshall");
@@ -41,7 +47,29 @@ public class Marshall extends Personne{
 		System.out.println(getName()+ " will do nothing now!");
 	}
 	
-
+	public void tirer() {
+		Set<Bandit> bandits = wagon.getBandits();
+		if(bandits.isEmpty()) {
+			System.out.println(this.getName() + " has shot no body");
+		}
+		else {
+			// On enlève un butin au hasard
+			int size = bandits.size();
+			int item = new Random().nextInt(size); // In real life, the Random object should be rather more shared than this
+			int i = 0;
+			Bandit touche = null;
+			for(Bandit b : bandits) {
+			    if (i == item) {
+			    	touche = b;
+			        bandits.remove(touche);
+			    i++;
+			    }
+			}
+			System.out.println(this.getName() + " has shot " + touche.getName());
+			if(!touche.isEmpty())
+				wagon.addButin(touche.popButin());
+		}
+	}
 
 
 }

@@ -1,6 +1,9 @@
 package modele;
 
 
+import java.util.Random;
+import java.util.Set;
+
 import modele.Train.Wagon;
 
 /*
@@ -23,7 +26,7 @@ public class Bandit extends Personne
 	}
 	
 	@Override
-	protected Wagon personneWagon(Train t, Personne p) {
+	protected Wagon positionInitiale(Train t, Personne p) {
 		return t.banditLastWagon(this);
 	}
 	
@@ -31,6 +34,21 @@ public class Bandit extends Personne
 	public boolean getInterieur( ) { 
 		return this.interieur;
 	}
+
+	public void tirer() {
+		Bandit touche = wagon.anotherBanditThan(this);
+		//Set<Bandit> bandits = wagon.getBandits();
+		if(touche == null) {
+			System.out.println(this.getName() + " has shot no body");
+		}
+		else {
+			System.out.println(this.getName() + " has shot " + touche.getName());
+			if(!touche.isEmpty())
+				wagon.addButin(touche.popButin());
+		}
+	}
+
+	
 	@Override
 	protected void executeAction() {
 		//si cette action est nulle rien va etre executer
@@ -83,7 +101,7 @@ public class Bandit extends Personne
 	
 	public void braquer() {
 		if(wagon.getButins().isEmpty()) return;
-		this.sac.pushButin(wagon.stoleButin());
+		this.sac.pushButin(wagon.popButin());
 	}
 	
 	
