@@ -25,16 +25,16 @@ import java.util.Set;
  */
 
 
-public class Train
+public class Train extends Observable
 {
 	/*
 	 * Attributs
 	 */
 	//LE train est responsable de gerer le nbr de bandits + responsable de les creer
-	private final int MAX_NB_BANDITS = 3 ;
+	final int MAX_NB_BANDITS = 3 ;
 	private int NB_BANDITS =0 ;
-	private final int MAX_N_ACTION = 5;
-	private final int NB_WAGONS;
+	final int MAX_N_ACTION = 5;
+	 private final int NB_WAGONS;
 	private Wagon locomotive;
 	private Wagon firstWagon;
 	
@@ -144,6 +144,12 @@ public class Train
 	
 	
 	
+	public int getNB_WAGONS() {
+		return NB_WAGONS;
+	}
+
+
+
 	protected class Wagon
 	{
 		private Train train;

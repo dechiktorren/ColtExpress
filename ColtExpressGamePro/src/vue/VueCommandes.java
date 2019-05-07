@@ -1,6 +1,6 @@
 package vue;
 
-import modele.Modele;
+import modele.Train;
 
 import java.util.*;
 import java.awt.*;
@@ -12,11 +12,11 @@ public class VueCommandes extends JPanel {
      * Pour que le bouton puisse transmettre ses ordres, on garde une
      * référence au modèle.
      */
-    private Modele modele;
+    private Train train;
 
     /** Constructeur. */
-    public VueCommandes(Modele modele) {
-	this.modele = modele;
+    public VueCommandes(Train train) {
+	this.train = train;
 	/**
 	 * On crée un nouveau bouton, de classe [JButton], en précisant le
 	 * texte qui doit l'étiqueter.
@@ -65,8 +65,10 @@ public class VueCommandes extends JPanel {
 	     * faire directement référence au modèle enregistré pour la classe
 	     * englobante [VueCommandes].
 	     */
-	    Modele modele;
-	    public Controleur(Modele modele) { this.modele = modele; }
+	    Train train;
+	    public Controleur(Train train) { 
+	    	this.train = train; 
+	    }
 	    /**
 	     * Action effectuée à réception d'un événement : ?
 	     */
@@ -80,7 +82,7 @@ public class VueCommandes extends JPanel {
 	 * Retour à la configuration du bouton.
 	 * Création d'un contrôleur, attaché au modèle.
 	 */
-	Controleur ctrl = new Controleur(modele);
+	Controleur ctrl = new Controleur(train);
 	/** Enregistrement du contrôleur comme auditeur du bouton. */
 	boutonAvance.addActionListener(ctrl);
 

@@ -1,6 +1,6 @@
 package vue;
 
-import modele.Modele;
+import modele.Train;
 
 import java.util.*;
 import java.awt.*;
@@ -9,23 +9,26 @@ import javax.swing.*;
 
 public class VueTrain extends JPanel implements Observer {
     /** On maintient une référence vers le modèle. */
-    private Modele modele;
-    /** Définition d'une taille (en pixels) pour l'affichage des cellules. */
-    private final static int TAILLE = 12;
+    private Train train;
+    
+    // dimention d'une position en nombre de pixels 
+    private final static int largeurPosition = 150;
+    private final static int hauteurPosition = 100;
+    
 
     /** Constructeur. */
-    public VueTrain(Modele modele) {
-	this.modele = modele;
-	/** On enregistre la vue [this] en tant qu'observateur de [modele]. */
-	modele.addObserver(this);
-	/**
-	 * Définition et application d'une taille fixe pour cette zone de
-	 * l'interface, calculée en fonction du nombre de cellules et de la
-	 * taille d'affichage.
-	 */
-	Dimension dim = new Dimension(TAILLE*Modele.LARGEUR,
-				      TAILLE*Modele.HAUTEUR);
-	this.setPreferredSize(dim);
+    public VueTrain(Train train) {
+		this.train = train;
+		/** On enregistre la vue [this] en tant qu'observateur de [modele]. */
+		train.addObserver(this);
+		/**
+		 * Définition et application d'une taille fixe pour cette zone de
+		 * l'interface, calculée en fonction du nombre de cellules et de la
+		 * taille d'affichage.
+		 */
+		Dimension dim = new Dimension(this.largeurPosition * train.getNB_WAGONS(),
+					      this.hauteurPosition * 2);
+		this.setPreferredSize(dim);
     }
 
     /**
@@ -34,7 +37,9 @@ public class VueTrain extends JPanel implements Observer {
      * modèle. Ici on se content de réafficher toute la grille avec la méthode
      * prédéfinie [repaint].
      */
-    public void update() { repaint(); }
+    public void update() { 
+    	repaint(); 
+    }
 
     /**
      * Les éléments graphiques comme [JPanel] possèdent une méthode
@@ -47,14 +52,14 @@ public class VueTrain extends JPanel implements Observer {
     public void paintComponent(Graphics g) {
 		super.repaint();
 		/** Pour chaque cellule... */
-		for(int i=1; i<=Modele.LARGEUR; i++) {
-		    for(int j=1; j<=Modele.HAUTEUR; j++) {
+		for(int i=1; i<=train.getNB_WAGONS(); i++) {
+		    for(int j=1; j<=1; j++) {
 			/**
 			 * ... Appeler une fonction d'affichage auxiliaire.
 			 * On lui fournit les informations de dessin [g] et les
 			 * coordonnées du coin en haut à gauche.
 			 */
-			paint(g, modele.getCellule(i, j), (i-1)*TAILLE, (j-1)*TAILLE);
+		    	paint(g, train.getPos(i, j), j*largeur, i*hauteur);
 		    }
 		}
     }
@@ -65,14 +70,7 @@ public class VueTrain extends JPanel implements Observer {
      * [CModele.Cellule].
      * Ceci serait impossible si [Cellule] était déclarée privée dans [CModele].
      */
-    private void paint(Graphics g, CModele.Cellule c, int x, int y) {
-	if (c.estVivante()) {
-	    /** Sélection d'une couleur. */
-	    g.setColor(Color.BLACK);
-	    /** Coloration d'un rectangle. */
-	    g.fillRect(x, y, TAILLE, TAILLE);
-	}
-    }
+    
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
