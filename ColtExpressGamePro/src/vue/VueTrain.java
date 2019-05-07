@@ -1,5 +1,7 @@
 package vue;
 
+import modele.Bandit;
+import modele.ContainerStack;
 import modele.Train;
 
 import java.util.*;
@@ -51,26 +53,52 @@ public class VueTrain extends JPanel implements Observer {
      */
     public void paintComponent(Graphics g) {
 		super.repaint();
-		/** Pour chaque cellule... */
-		for(int i=1; i<=train.getNB_WAGONS(); i++) {
-		    for(int j=1; j<=1; j++) {
+		
+		Train.Wagon currentWagon = train.getLocomotive();
+		
+		final int NB_WAGONS = train.getNB_WAGONS();
+		int x = 10;
+		int y = 10;
+		
+		// affichage de la locomotive
+		paint(g, currentWagon, x + NB_WAGONS*160, y);
+		
+		/** Pour chaque locomotive... */
+		for(int i=1; i<=NB_WAGONS; i++) {
+		    //for(int j=1; j<=1; j++) {
 			/**
 			 * ... Appeler une fonction d'affichage auxiliaire.
 			 * On lui fournit les informations de dessin [g] et les
 			 * coordonnées du coin en haut à gauche.
 			 */
-		    	paint(g, train.getPos(i, j), j*largeur, i*hauteur);
-		    }
+			currentWagon = currentWagon.getSuivant();
+			paint(g, currentWagon, x + i*160, y);
+			
+			
+		    
+			//}
 		}
     }
     /**
-     * Fonction auxiliaire de dessin d'une cellule.
-     * Ici, la classe [Cellule] ne peut être désignée que par l'intermédiaire
-     * de la classe [CModele] à laquelle elle est interne, d'où le type
-     * [CModele.Cellule].
-     * Ceci serait impossible si [Cellule] était déclarée privée dans [CModele].
+     * Fonction auxiliaire de dessin d'un wagon.
+     * Ici, la classe [Wagon] ne peut être désignée que par l'intermédiaire
+     * de la classe [Train] à laquelle elle est interne, d'où le type
+     * [Train.Wagon].
+     * Ceci serait impossible si [Wagon] était déclarée privée dans [Train].
      */
-    
+    private void paint(Graphics g, Train.Wagon w, int x, int y) {
+    	g.drawRect(x, y, 150, 100);
+    	int ytemp = 5;
+    	
+    	for (Bandit b : w.getBandits() ) {
+    		g.drawString(b.getName(), x + 5, ytemp);
+    		ytemp += 10;
+    	}
+    	
+    	ContainerStack contenu = w.getButins();
+    	butins = contenu.getButins();
+    	
+    }
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

@@ -7,26 +7,32 @@ public abstract class ContainerStack {
 	private final int  MAX_CAPACITY;
 	private int n ;
 	ContainerStack(int maxN){
-		butins = new Stack<Butin>();
+		setButins(new Stack<Butin>());
 		n= 0;
 		MAX_CAPACITY = maxN;
 	}
 	public void pushButin(Butin b ) {
 		if(n>= this.MAX_CAPACITY) return;
-		butins.push(b);
+		getButins().push(b);
 		n++;
 	}
 	public Butin popButin() {
-		if(butins.empty()) return null ;
+		if(getButins().empty()) return null ;
 		n--;
-		return butins.pop();
+		return getButins().pop();
 		
 	}
 	public Butin peekButin() {
-		return butins.peek();
+		return getButins().peek();
 	}
 	public boolean isEmpty() {
-		return butins.empty();
+		return getButins().empty();
+	}
+	public Stack<Butin> getButins() {
+		return butins;
+	}
+	public void setButins(Stack<Butin> butins) {
+		this.butins = butins;
 	}
 
 

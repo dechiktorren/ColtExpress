@@ -5,7 +5,7 @@ import java.util.Set;
 
 
 public abstract class Personne {
-	protected String name; // nom du bandit
+	private String name; // nom du bandit
 	protected Train.Wagon wagon; // Le wagon dans lequel il se situe
 	protected ActionList actions; // L'enemble des actions qui va prendre chaque tour max = 5
 	
@@ -13,7 +13,7 @@ public abstract class Personne {
 	public Personne(Train t, String name){
 		wagon = personneWagon(t, this); //method de la classe wagon rdv sa propre description
 		actions = new ActionList(t.getMAX_N_ACTION()); //maximum  actions
-		this.name = name;
+		this.setName(name);
 	}
 	
 	
@@ -30,10 +30,10 @@ public abstract class Personne {
 	public void tirer() {
 		Bandit b2 = wagon.anotherBanditThan(this);
 		if(b2 == null) {
-			System.out.println(this.name + " has shot no body");
+			System.out.println(this.getName() + " has shot no body");
 			return;
 		}
-		System.out.println(this.name + " has shot "+b2.name);
+		System.out.println(this.getName() + " has shot "+b2.getName());
 
 			
 		if(!b2.sac.isEmpty())
@@ -45,6 +45,20 @@ public abstract class Personne {
 	
 	
 	
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+
+
+
+
 	protected class ActionList {
 		private Hashtable<Integer, Action> actions;
 		private int MAX_N;

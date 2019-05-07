@@ -44,31 +44,31 @@ public class Bandit extends Personne
 		}
 		if(interieur && actionExcute.equals(Action.Monter)) {
 			interieur = false;
-			System.out.println(name+" monte sur le toit");
+			System.out.println(getName()+" monte sur le toit");
 			System.out.println(wagon);
 			return;
 		}
 		if(!interieur && actionExcute.equals(Action.Descendre)) {
 			interieur = true;
-			System.out.println(name+" descend a l'interieur");
+			System.out.println(getName()+" descend a l'interieur");
 			System.out.println(wagon);
 			return;
 		}
 		if(!wagon.isLastWagon() && actionExcute.equals(Action.Avance)) {
 			Train.Wagon newWagon = wagon.avanceBandit(this);
-			System.out.println(name+" avance vers la fin de train");
+			System.out.println(getName()+" avance vers la fin de train");
 			wagon =  newWagon;
 			System.out.println(wagon);
 			return;
 		}
 		if(!wagon.isFirstWagon() && actionExcute.equals(Action.Recule)) {
 			Train.Wagon newWagon =wagon.reculeBandit(this);
-			System.out.println(name+" recule vers le debut de train");
+			System.out.println(getName()+" recule vers le debut de train");
 			wagon =  newWagon;
 			System.out.println(wagon);
 			return;
 		}
-		System.out.println(name+ " has nothing to do!");
+		System.out.println(getName()+ " has nothing to do!");
 	}
 	
 	
@@ -76,7 +76,7 @@ public class Bandit extends Personne
 	
 	public String toString() {
 		String pos = (this.interieur)? ("a l'interieur"):("sur le toit") ;
-		return this.name + " est " + pos;
+		return this.getName() + " est " + pos;
 	}
 	
 	
