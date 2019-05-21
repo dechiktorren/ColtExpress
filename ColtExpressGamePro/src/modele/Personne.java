@@ -6,7 +6,7 @@ import java.util.Set;
 
 public abstract class Personne extends Possesseur {
 	protected final Train train;
-	private String name; // nom du bandit
+	protected String name; // nom du bandit
 	protected Train.Wagon wagon; // Le wagon dans lequel il se situe
 	protected ActionList actions; // L'enemble des actions qui va prendre chaque tour max = 5
 	
@@ -14,7 +14,7 @@ public abstract class Personne extends Possesseur {
 	public Personne(Train t, String name){
 		super(5);
 		this.train = t;
-		wagon = positionInitiale(t, this); //method de la classe wagon rdv sa propre description
+		this.wagon = positionInitiale(t, this); //method de la classe wagon rdv sa propre description
 		actions = new ActionList(t.getMAX_N_ACTION()); //maximum  actions
 		this.setName(name);
 	}

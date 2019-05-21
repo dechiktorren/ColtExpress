@@ -5,10 +5,11 @@ import java.util.Set;
 
 import modele.Train.Wagon;
 
-public class Marshall extends Personne{
+public class Marshall extends Personne {
 
 	public Marshall(Train t, String name) {
 		super(t, name);
+		//this.wagon.toString(); // inutile
 	}
 
 	
@@ -48,7 +49,13 @@ public class Marshall extends Personne{
 	}
 	
 	public void tirer() {
-		Set<Bandit> bandits = wagon.getBandits();
+		
+		Set<Bandit> bandits = null;
+		//System.out.println(this.wagon.toString());
+		
+		//this.train.hashCode();
+		//wagon.getBandits();
+		
 		if(bandits.isEmpty()) {
 			System.out.println(this.getName() + " has shot no body");
 		}

@@ -165,11 +165,12 @@ public class Train extends Observable
 		
 		public Wagon(Train t, int o){
 			super(10);
-			train =t;
-			setBandits(new HashSet<Bandit>(0));
+			train = t;
+			bandits = new HashSet<Bandit>();
 			ordre = o;
 			marshall = null;
 		}
+		
 		public boolean isLastWagon() {
 			return  this.getSuivant()==(null);
 		}
@@ -228,6 +229,7 @@ public class Train extends Observable
 		public Set<Bandit> getBandits() {
 			return bandits;
 		}
+		
 		public void setBandits(Set<Bandit> bandits) {
 			this.bandits = bandits;
 		}
